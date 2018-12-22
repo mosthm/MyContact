@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_small">
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_normal"
+        android:background="@color/gobal_background3">
+        <LinearLayout
+            android:id="@+id/linerContactname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/linerContactaction"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/rank_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/player_image"
+                app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/player_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_small"
+                android:layout_marginRight="@dimen/space_small"
+                android:src="@drawable/ic_face_black_24dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_large"
+                android:text="Name Contact"
+                app:layout_constraintLeft_toRightOf="@id/player_image"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/contact_phone"
+                android:layout_width="wrap_content"
+                android:text="09124206971"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_littel"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contact_name" />
+            <!--<ImageView-->
+                <!--android:id="@+id/contact_edit"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/space_small"-->
+                <!--android:layout_marginRight="@dimen/space_small"-->
+                <!--android:src="@drawable/ic_info_outline_black_24dp"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintRight_toRightOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent" />            -->
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linerContactaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linerContactname"
+            android:visibility="invisible">
+            <ImageView
+            android:id="@+id/contact_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_small"
+            android:layout_marginRight="@dimen/space_small"
+            android:src="@drawable/ic_call_black_24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/contact_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_small"
+                android:layout_marginRight="@dimen/space_small"
+                android:src="@drawable/ic_info_outline_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</android.support.v7.widget.CardView>

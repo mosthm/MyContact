@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="gobal_background">#DDDDDD</color>
+    <color name="gobal_background2">#4c62b8</color>
+    <color name="gobal_background3">#e5dbdd</color>
+    <color name="White">#ffffff</color>
+    <color name="colorButtonNormal">#2196f3</color>
+    <color name="global_backgound">#eeeeee</color>
+</resources>
