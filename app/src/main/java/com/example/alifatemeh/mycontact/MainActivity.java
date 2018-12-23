@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private String id;
     private String name;
     private String phoneNo;
+    private ManagmentContact managmentContact;
+    private static AppCompatActivity instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                     Log.d("TAG","response granted");
-                    readContacts();
+                    managmentContact=new ManagmentContact(getApplicationContext());
+                    managmentContact.readContacts(MainActivity.this);
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -108,89 +111,16 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             // Permission has already been granted
-            readContacts();
+            managmentContact=new ManagmentContact(getApplicationContext());
+            managmentContact.readContacts(MainActivity.this);
         }
     }
-
-    public void readContacts(){
-        ContentResolver cr = getContentResolver();
-        Cursor cur=null;
-        try {
-            cur = cr.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
-        }catch (Exception e){
-            Log.d("TAG", "Error on contacts" + e.getMessage());
-        }
-
-        if ((cur != null ? cur.getCount() : 0) > 0) {
-            while (cur != null && cur.moveToNext()) {
-                id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                Log.d("TAG", "idb: " + id);
-                Log.d("TAG", "NameContact: " + name);
-                if (cur.getInt(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-//                        phoneNumber=pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                        Log.d("TAG", "Phone_Number: " + phoneNo);
-                    }
-//                    updateContact();
-                    mangeSaveContact();
-                    pCur.close();
-
-
-                }
-            }
-        }
-        if(cur!=null){
-            cur.close();
-        }
-    }
-    public void mangeSaveContact(){
-        ContatcList contatcListObject= MypreferenceManager.getInstance(this).getAndroidContacts();
-        boolean flag=false;
-        int i,g;
-
-        if(!(contatcListObject.getContatcList().size()==0)) {
-            try {
-                for (i = 0; i < contatcListObject.getContatcList().size(); i++) {
-                    if (id .equals(contatcListObject.getContatcList().get(i).getId())&& phoneNo .equals(contatcListObject.getContatcList().get(i).getPhoneNumber()) ) {
-                        flag = true;
-                        //break;
-                    }
-                }
-
-            }catch (Exception e){
-
-            }
-            if(flag ==false){
-                updateContact();
-            }
-
-        }else {
-            flag =false;
-            updateContact();
-        }
-//
-    }
-    public void updateContact(){
-
-        ContatcList contatcList=MypreferenceManager.getInstance(MainActivity.this ).getAndroidContacts();
-        AndroidContacts androidContacts =new AndroidContacts();
-        androidContacts.setId(id);
-        androidContacts.setName(name);
-        androidContacts.setPhoneNumber(phoneNo);
-        contatcList.addContatcList(androidContacts);
-        MypreferenceManager.getInstance(MainActivity.this).putAndroidContacts(contatcList);
-
-    }
-
 
     @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(broadcastReceiver);
-//        LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(broadcastReceivermessage);
+        LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(broadcastReceivermessage);
     }
 
     @Override
@@ -199,13 +129,20 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(
                 broadcastReceiver,new IntentFilter("intent_info")
         );
-//        LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(
-//                broadcastReceivermessage,new IntentFilter("intent_ok")
-//        );
+        LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(
+                broadcastReceivermessage,new IntentFilter("intent_ok")
+        );
     }
 
     //define an object of type registerUserCallback
-
+    private BroadcastReceiver broadcastReceivermessage = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getFragmentManager().popBackStack();
+            managmentContact=new ManagmentContact(getApplicationContext());
+            managmentContact.readContacts(MainActivity.this);
+        }
+    };
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
